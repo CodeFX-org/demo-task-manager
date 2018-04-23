@@ -23,6 +23,10 @@ public class Tasks {
 		return new Tasks(tasks);
 	}
 
+	public static Tasks of(Stream<Task> tasks) {
+		return new Tasks(tasks);
+	}
+
 	public Stream<Task> tasks() {
 		return tasks.stream();
 	}

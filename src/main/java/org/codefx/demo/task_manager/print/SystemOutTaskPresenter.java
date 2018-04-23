@@ -5,8 +5,6 @@ import org.codefx.demo.task_manager.task.Tasks;
 
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.function.Function;
-import java.util.stream.Stream;
 
 import static org.apache.commons.lang3.StringUtils.abbreviate;
 import static org.apache.commons.lang3.StringUtils.abbreviateMiddle;
@@ -17,8 +15,6 @@ import static org.apache.commons.lang3.StringUtils.rightPad;
  */
 public class SystemOutTaskPresenter implements TaskPresenter {
 
-	private final Function<? super Stream<Task>, ? extends Stream<Task>> taskFilter;
-
 	private final int pidWidth;
 	private final int commandWidth;
 	private final int userWidth;
@@ -26,8 +22,7 @@ public class SystemOutTaskPresenter implements TaskPresenter {
 
 	private final DateTimeFormatter startTimeFormatter;
 
-	public SystemOutTaskPresenter(Function<? super Stream<Task>, ? extends Stream<Task>> taskFilter) {
-		this.taskFilter = taskFilter;
+	public SystemOutTaskPresenter() {
 		pidWidth = 6;
 		userWidth = 10;
 		startTimeWidth = 13;
@@ -41,8 +36,7 @@ public class SystemOutTaskPresenter implements TaskPresenter {
 	@Override
 	public void present(Tasks tasks) {
 		printHeader();
-		taskFilter
-				.apply(tasks.tasks())
+		tasks.tasks()
 				.map(this::formatAsRow)
 				.forEach(this::printRow);
 		System.out.println();
